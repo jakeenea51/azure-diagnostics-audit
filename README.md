@@ -22,7 +22,10 @@ diag_audit.py [-h] -s SUBSCRIPTIONS -t {appservice,aks} [-d DIAGNOSTIC] [-w WORK
 ```
 > At least one of either DIAGNOSTIC or WORKSPACE must be present.
 - `-s`/`--subscriptions`: (filepath) Audit one or more subscriptions. Input must be in the form of a CSV, with each line containing the subscription ID and name. For an example, check out 'subscriptions-example.csv'.
-- `-t`/`--type`:  (string) The resource type you are auditing. Current options are 'appservice' or 'aks'.
+- `-t`/`--type`:  (string) The resource type you are auditing. Current options are:
+    - `appservice`: Azure App Services
+    - `aks`: Azure Kubernetes Services
+    - `sqldb`: Azure SQL Databases
 - `-d`/`--diagnostic`: (string) The name of the diagnostic setting you are looking for.
 - `-w`/`--workspace`: (string) The name of the log analytics workspace where you are collecting your logs.
 - `-h`: Help
