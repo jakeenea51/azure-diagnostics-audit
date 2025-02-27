@@ -63,9 +63,9 @@ def get_resources(resource_client, resource_type):
 
 
 # Fetch diagnostic settings for a specific resource
-def get_diagnostic_settings(monitor_client, resources, setting_name=None, workspace=None):
+def get_diagnostic_settings(monitor_client, resources, subName, subProgress, setting_name=None, workspace=None):
     matching_diagnostic_settings = {}
-    print(f"[+] Fetching diagnostic settings...")
+    print(f"[+] Fetching diagnostic settings for {subName} ({subProgress})...")
     for resource in tqdm(resources):
         try:
             diagnostic_settings = monitor_client.diagnostic_settings.list(resource.id)
@@ -98,7 +98,7 @@ def main():
     
 
     # Get all diagnostics for all resources in a subscription
-    def get_subscription_diagnostics(subId):
+    def get_subscription_diagnostics(subId, subName, subProgress):
 
         # Prepare diagnostics dictionary
         diagnostics = {}
@@ -113,7 +113,7 @@ def main():
             return
         
         # Get all diagnostics settings for resourses
-        diagnostics.update(get_diagnostic_settings(monitor_client, all_resources, args.diagnostic, args.workspace))
+        diagnostics.update(get_diagnostic_settings(monitor_client, all_resources, subName, subProgress, args.diagnostic, args.workspace))
 
         return diagnostics
 
@@ -145,7 +145,7 @@ def main():
 
     # Print settings for each sub
     for sub in subscription_ids:
-        diagnostics = get_subscription_diagnostics(sub[0])
+        diagnostics = get_subscription_diagnostics(sub[0], sub[1], (str(subscription_ids.index(sub)+1) + "/" + str(len(subscription_ids))))
         prYellow(f"\n----------------------------------------------------------\n{sub[1]}\n----------------------------------------------------------\n")
         if not diagnostics:
             prRed("No resources found.\n")
