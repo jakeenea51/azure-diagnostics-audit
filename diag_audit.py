@@ -19,7 +19,7 @@ import csv
 def parse_args():
     ap = argparse.ArgumentParser()
     ap.add_argument("-s", "--subscriptions", type=pathlib.Path, required=True, help="Audit one or more subscriptions. Input must be in the form of a CSV, with each line containing the subscription ID and name. For an example, check out 'subscriptions-example.csv'.")
-    ap.add_argument("-t", "--type", type=str, required=True, choices=["appservice", "aks", "sqldb"], help="The resource type you are auditing.")
+    ap.add_argument("-t", "--type", type=str, required=True, choices=["appservice", "aks", "sqldb", "postgresflex"], help="The resource type you are auditing.")
     ap.add_argument("-d", "--diagnostic", type=str, help="The name of the diagnostic setting you are looking for.")
     ap.add_argument("-w", "--workspace", type=str, help="The name of the log analytics workspace where you are collecting your logs.")
     return ap.parse_args()
@@ -58,6 +58,10 @@ def get_resources(resource_client, resource_type):
         # SQL DB
         elif resource_type == "sqldb":
             if resource.type == "Microsoft.Sql/servers/databases":
+                resources_results.append(resource)
+        # PostgreSQL flexible servers
+        elif resource_type == "postgresflex":
+            if resource.type == "Microsoft.DBforPostgreSQL/flexibleServers":
                 resources_results.append(resource)
     return resources_results
 

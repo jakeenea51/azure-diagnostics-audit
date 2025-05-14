@@ -26,6 +26,7 @@ diag_audit.py [-h] -s SUBSCRIPTIONS -t {appservice,aks} [-d DIAGNOSTIC] [-w WORK
     - `appservice`: Azure App Services
     - `aks`: Azure Kubernetes Services
     - `sqldb`: Azure SQL Databases
+    - `postgresflex`: PostgreSQL Flexible Servers
 - `-d`/`--diagnostic`: (string) The name of the diagnostic setting you are looking for.
 - `-w`/`--workspace`: (string) The name of the log analytics workspace where you are collecting your logs.
 - `-h`: Help
